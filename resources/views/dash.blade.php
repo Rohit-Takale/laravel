@@ -10,9 +10,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div id="error"></div>
-                    
+
                     <form action="{{route('insert_comp')}}" method="POST">
-                    @csrf
+                        @csrf
                         <div class="grid grid-cols-2 gap-5">
 
                             <div>
@@ -41,10 +41,10 @@
                                 </x-primary-button>
 
                             </div>
-<div>@foreach ($values as $name)
-    {{$name}}
-    @endforeach
-</div>
+                            <div>@foreach ($values as $name)
+                                {{$name2 = $name['name']}}
+                                @endforeach
+                            </div>
 
                         </div>
                     </form>

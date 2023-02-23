@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Company;
+use App\Http\Controllers\Todo;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,17 +24,23 @@ Route::post(
     [Company::class, 'insert']
 )->name('insert_comp');
 
-Route::get('dash',[Company::class,'view'])->name('dash');
+Route::get('dash', [Company::class, 'view'])->name('dash');
 
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/todo', function(){
+        return view('todo');
+    })->name('todo');
+
+    Route::post('todo_insert', [Todo::class,'insert'])->name('todo_insert');
     // Route::get('/dash', function () {
     //     return view('dash');
     // })->name('dash');
-    
+
 });
 
 require __DIR__ . '/auth.php';
