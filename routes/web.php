@@ -39,6 +39,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('todo_insert', [Todo::class,'insert'])->name('todo_insert');
     Route::get('get_todo_data',[Todo::class,'view'])->name('get_todo_data');
     Route::get('update_data',[Todo::class,'display_edt'])->name('update_data');
+    Route::post('edt_todo', [Todo::class, 'edit_todo'])->name('edt_todo');
+    Route::get('completed_todo_data', [Todo::class,'display_completed'])->name('completed_todo_data');
+    Route::post('chng_cmpltd', [Todo::class,'move_cmpltd'])->name('chng_cmpltd');
+    Route::delete('dlt_todo', [Todo::class, 'delete_todo'])->name('dlt_todo');
+
     // Route::get('/dash', function () {
     //     return view('dash');
     // })->name('dash');

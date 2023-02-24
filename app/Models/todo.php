@@ -11,6 +11,8 @@ class todo extends Model
 
     protected $table = 'todo';
 
+    protected $dates = ['created_at'];
+
     protected $fillable = ['task_name','task_desc'];
 
 }
