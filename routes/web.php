@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     })->name('todo');
 
     Route::post('todo_insert', [Todo::class,'insert'])->name('todo_insert');
+    Route::get('get_todo_data',[Todo::class,'view'])->name('get_todo_data');
+    Route::get('update_data',[Todo::class,'display_edt'])->name('update_data');
     // Route::get('/dash', function () {
     //     return view('dash');
     // })->name('dash');
