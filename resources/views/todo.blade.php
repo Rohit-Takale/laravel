@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white border-b border-gray-200" id="form_div">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Create new list') }}
                     </h2>
@@ -18,12 +18,14 @@
 
                         <div class="id_div" style="display:none;">
                             <x-input-label for="name" :value="__('Task Id')" />
-                            <x-text-input id="t_id" class="block mt-1 w-full t_id" type="text" name="id" :value="old('id')" required autofocus />
+                            <x-text-input id="t_id" class="block mt-1 w-full t_id" type="text" name="id"
+                                :value="old('id')" required autofocus />
                         </div>
 
                         <div>
                             <x-input-label for="name" :value="__('Task Name')" />
-                            <x-text-input id="cname" class="block mt-1 w-full t_name" type="text" name="task_name" :value="old('tname')" required autofocus />
+                            <x-text-input id="cname" class="block mt-1 w-full t_name" type="text"
+                                name="task_name" :value="old('tname')" required autofocus />
                         </div>
 
                     </div>
@@ -31,7 +33,9 @@
                     <div class="grid grid-cols-1 gap-5 mt-5 ">
                         <div>
                             <x-input-label for="name" :value="__('Description')" />
-                            <textarea name="task_desc" id="descr" rows="4" class="descr block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="breif intro on your todo task..."></textarea>
+                            <textarea name="task_desc" id="descr" rows="4"
+                                class="descr block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="breif intro on your todo task..."></textarea>
                         </div>
 
                         <div class="main-btn-div">
@@ -48,7 +52,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="p-6 bg-white border-b border-gray-200" id="crtd_list_div">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight p-5">
                             {{ __('Created lists') }}
                         </h2>
@@ -68,7 +72,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="p-6 bg-white border-b border-gray-200" id="cmpltd_list_div">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight p-5">
                             {{ __('Completed lists') }}
                         </h2>
@@ -88,9 +92,7 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script>
         $(document).ready(function() {
-            // $("html, body").animate({ scrollbottom: $("#crtd_list").scrollbottom() }, 1000);
-
-            // Todo Submission
+            // Todo Form Submission and updation begins here
             $("#todo_sub").click(function(e) {
                 e.preventDefault();
                 var t_name = "",
@@ -124,13 +126,15 @@
                     $(".t_name").val("");
                     $(".descr").val("");
                     $(".error").html("Task Created Sucessfully");
+                    $('html, body').animate({
+                        scrollTop: $("#crtd_list_div").offset().top
+                    }, 1000);
 
                     display();
-                } else if (t_id != "") {
-                    alert(t_id)
+                } else if (t_id != "" && t_name != "" && t_desc != "") {
                     $.ajax({
                         type: "POST",
-                        url: "{{route('edt_todo')}}",
+                        url: "{{ route('edt_todo') }}",
                         data: {
                             task_name: t_name,
                             task_desc: t_desc,
@@ -144,6 +148,11 @@
                     $(".t_name").val("");
                     $(".descr").val("");
                     $(".error").html("Task Updated Sucessfully");
+                    $("#cncl-edt").remove();
+                    $("#todo_sub").html("submit todo");
+                    $('html, body').animate({
+                        scrollTop: $("#crtd_list_div").offset().top
+                    }, 2000);
 
                     display();
                     completed_display();
@@ -152,8 +161,9 @@
                     $(".error").html("Some fields are missing");
                 }
             });
+            //Todo Form Submission and updation ends here
 
-
+            //Getting the values starts here
             function display() {
                 $.ajax({
                     type: "get",
@@ -175,22 +185,23 @@
                                        ${val.task_desc}
                                     </p>
 
-                                    <p class="text-gray-700 text-base" style="min-height:50px;">
-                                       ${val.created}
-                                    </p>
+                                    
                                    
                                 </div>
+                                <p class="text-gray-700 text-base px-6 py-4" style="min-height:50px;">
+                                       ${val.created}
+                                    </p>
                                 <div class="px-6 pt-4 pb-2">
                                     <x-primary-button type="submit" class="edtbtn" id="edtbtn" value="${val.id}">
                                         {{ __('Edit') }}
                                     </x-primary-button>
 
-                                    <x-primary-button type="submit" class="completed_lists" value="${val.id}" id="completed_list">
+                                    <x-primary-button type="submit" class="completed_lists bg-blue-800" value="${val.id}" id="completed_list">
                                         {{ __('Completed') }}
                                     </x-primary-button>
 
                                   
-                                    <x-primary-button type="button"  class="dltbtn" id="dltbtn" value="${val.id}">
+                                    <x-primary-button type="button"  class="dltbtn bg-red-800" id="dltbtn" value="${val.id}">
                                         {{ __('delete') }}
                                     </x-primary-button>
                                    
@@ -248,7 +259,7 @@
                 });
             }
             completed_display();
-
+            //Getting the values ends here
 
             /* This is all Edit button functionality*/
             $(document).on("click", ".edtbtn", function(e) {
@@ -280,6 +291,9 @@
                             $(".main-btn-div").append(`<x-primary-button type="submit" class="bg-red-800" id="cncl-edt">
                                 {{ __('Undo Edit') }}
                             </x-primary-button>`);
+                            $('html, body').animate({
+                                scrollTop: $("#form_div").offset().top
+                            }, 2000);
 
                         });
                     }
@@ -291,7 +305,6 @@
             /*Undo button functionality Ends Here*/
             $(document).on("click", "#cncl-edt", function(e) {
                 e.preventDefault();
-                console.log("clicked");
                 $("#todo_sub").html("submit todo");
                 $(".t_name").val("");
                 $(".descr").val("");
@@ -313,7 +326,7 @@
                 })
                 $.ajax({
                     type: "post",
-                    url: "{{route('chng_cmpltd')}}",
+                    url: "{{ route('chng_cmpltd') }}",
                     data: {
                         status: "1",
                         id: cmplt_id
@@ -321,6 +334,9 @@
                     dataType: "JSON",
                     success: function(response) {
                         console.log(response.msg);
+                        $('html, body').animate({
+                            scrollTop: $("#cmpltd_list_div").offset().top
+                        }, 2000);
 
                     }
                 });
@@ -343,7 +359,7 @@
                     });
                     $.ajax({
                         type: "delete",
-                        url: "{{route('dlt_todo')}}",
+                        url: "{{ route('dlt_todo') }}",
                         data: {
                             id: a
                         },
