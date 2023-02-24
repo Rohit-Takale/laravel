@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('task_name');
             $table->string('task_desc');
+            $table->string('status');
             $table->timestamps();
         });
     }
