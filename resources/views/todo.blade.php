@@ -18,14 +18,12 @@
 
                         <div class="id_div" style="display:none;">
                             <x-input-label for="name" :value="__('Task Id')" />
-                            <x-text-input id="t_id" class="block mt-1 w-full t_id" type="text" name="id"
-                                :value="old('id')" required autofocus />
+                            <x-text-input id="t_id" class="block mt-1 w-full t_id" type="text" name="id" :value="old('id')" required autofocus />
                         </div>
 
                         <div>
                             <x-input-label for="name" :value="__('Task Name')" />
-                            <x-text-input id="cname" class="block mt-1 w-full t_name" type="text"
-                                name="task_name" :value="old('tname')" required autofocus />
+                            <x-text-input id="cname" class="block mt-1 w-full t_name" type="text" name="task_name" :value="old('tname')" required autofocus />
                         </div>
 
                     </div>
@@ -33,9 +31,7 @@
                     <div class="grid grid-cols-1 gap-5 mt-5 ">
                         <div>
                             <x-input-label for="name" :value="__('Description')" />
-                            <textarea name="task_desc" id="descr" rows="4"
-                                class="descr block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="breif intro on your todo task..."></textarea>
+                            <textarea name="task_desc" id="descr" rows="4" class="descr block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="breif intro on your todo task..."></textarea>
                         </div>
 
                         <div class="main-btn-div">
@@ -371,10 +367,7 @@
                     });
                     return true;
                 }
-
-
             });
         });
     </script>
-
 </x-app-layout>
